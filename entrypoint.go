@@ -78,6 +78,22 @@ func build(packageName, destDir string, platform map[string]string, ldflags stri
 
 	/*------------*/
 
+	// add git owner exception for the build directory
+	ensureOptions := []string{"config", "--global", "--add", "safe.directory", workspaceDir}
+
+	// generate `git config` command
+	ensureCmd := exec.Command("git", ensureOptions...)
+
+	// execute `git config` command
+	fmt.Println("Adding git directory to whitelist:", ensureCmd.String())
+	if output, err := ensureCmd.CombinedOutput(); err != nil {
+		fmt.Println("An error occurred in git:", err)
+		fmt.Printf("%s\n", output)
+		os.Exit(1)
+	} else {
+		fmt.Printf("%s\n", output)
+	}
+
 	// command-line options for the `go build` command
 	buildOptions := []string{"build", "-v", "-x", "-buildmode", "exe", "-ldflags", ldflags, "-o", buildFilePath, packagePath}
 
