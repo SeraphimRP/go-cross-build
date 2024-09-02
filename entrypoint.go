@@ -79,7 +79,7 @@ func build(packageName, destDir string, platform map[string]string, ldflags stri
 	/*------------*/
 
 	// command-line options for the `go build` command
-	buildOptions := []string{"build", "-buildmode", "exe", "-ldflags", ldflags, "-o", buildFilePath, packagePath}
+	buildOptions := []string{"build", "-v", "-x", "-buildmode", "exe", "-ldflags", ldflags, "-o", buildFilePath, packagePath}
 
 	// generate `go build` command
 	buildCmd := exec.Command("go", buildOptions...)
