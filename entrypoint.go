@@ -118,11 +118,11 @@ func build(packageName, destDir string, platform map[string]string, ldflags stri
 
 	/*------------------------------*/
 
-	// create a compressed `.tar.gz` file
+	// create a compressed `.zip` file
 	if compress {
 
 		// compressed gzip file name
-		gzFileName := fmt.Sprintf("%s-%s-%s.tar.gz", inputName, platformKernel, platformArch)
+		zipFileName := fmt.Sprintf("%s-%s-%s", inputName, platformKernel, platformArch)
 
 		/*------------*/
 
@@ -143,18 +143,18 @@ func build(packageName, destDir string, platform map[string]string, ldflags stri
 
 		/*------------*/
 
-		// command-line options for the `tar` command
-		tarOptions := append([]string{"-cvzf", gzFileName}, includeFiles...)
+		// command-line options for the `zip` command
+		zipOptions := append([]string{zipFileName}, includeFiles...)
 
-		// generate `tar` command
-		tarCmd := exec.Command("tar", tarOptions...)
+		// generate `zip` command
+		zipCmd := exec.Command("zip", zipOptions...)
 
 		// set working directory for the command
-		tarCmd.Dir = destDirPath
+		zipCmd.Dir = destDirPath
 
-		// execute `tar` command
-		fmt.Println("Compressing build file using:", tarCmd.String())
-		if err := tarCmd.Run(); err != nil {
+		// execute `zip` command
+		fmt.Println("Compressing build file using:", zipCmd.String())
+		if err := zipCmd.Run(); err != nil {
 			fmt.Println("An error occurred during compression:", err)
 			os.Exit(1)
 		}
