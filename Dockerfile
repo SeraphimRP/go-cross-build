@@ -1,8 +1,6 @@
-# Debian GNU/Linux 10 (1.13.10-buster)
-FROM golang:latest
-
-# add zip
-RUN apt install zip
+# Alpine 3.20
+FROM golang:1.23.1-alpine3.20
+RUN apk install --no-cache zip
 
 # copy entrypoint file
 COPY entrypoint.go /usr/bin/entrypoint.go
@@ -10,5 +8,7 @@ COPY entrypoint.go /usr/bin/entrypoint.go
 # change mode of the entrypoint file
 RUN chmod +x /usr/bin/entrypoint.go
 
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /go-xbuild
+
 # set entrypoint command
-ENTRYPOINT [ "go", "run", "/usr/bin/entrypoint.go" ]
+ENTRYPOINT [ "/go-xbuild"]
