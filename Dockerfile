@@ -1,6 +1,9 @@
 # Debian GNU/Linux 10 (1.13.10-buster)
 FROM golang:latest
 
+# add zip
+RUN apt install zip
+
 # copy entrypoint file
 COPY entrypoint.go /usr/bin/entrypoint.go
 
