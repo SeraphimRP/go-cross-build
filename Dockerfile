@@ -8,7 +8,5 @@ COPY entrypoint.go /usr/bin/entrypoint.go
 # change mode of the entrypoint file
 RUN chmod +x /usr/bin/entrypoint.go
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /go-xbuild
-
 # set entrypoint command
-ENTRYPOINT [ "/go-xbuild"]
+ENTRYPOINT [ "go", "run", "/usr/bin/entrypoint.go"]
