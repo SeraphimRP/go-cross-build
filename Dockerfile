@@ -1,6 +1,6 @@
 # Alpine 3.20
 FROM golang:1.23.1-alpine3.20
-RUN apk install --no-cache zip
+RUN apk add --no-cache zip
 
 # copy entrypoint file
 COPY entrypoint.go /usr/bin/entrypoint.go
